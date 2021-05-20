@@ -10,7 +10,7 @@ class Product{
         this._id = _id;
     }
 
-     async save(){
+    async save(){
         const db = accessDb.getDb();
         let dbOp;
          if (this._id) {
@@ -34,7 +34,6 @@ class Product{
         return db.collection('products')
         .find().toArray()
         .then(results => {
-            console.log(results);
             return results;
         })
         .catch(err=>console.log(err))
@@ -46,10 +45,20 @@ class Product{
         return db.collection('products')
         .find({_id: new mongodb.ObjectId(prodctId)}).next()
         .then(result=>{
-            console.log(result);
             return result
         })
         .catch(err=>console.log(err))
+    }
+
+    static deleteById(prdctID){
+        const db = accessDb.getDb();
+        return db.collection('products')
+        .deleteOne({_id: new mongodb.ObjectId(prdctID)})
+        .then(result =>{
+            return result;
+        })
+        .catch(err=>console.log(err));
+        
     }
 }
 

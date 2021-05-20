@@ -54,11 +54,11 @@ const getAdminPage = {
         const price = req.body.price;
         const description = req.body.description;
         
-        const product = new Product(title, price, description, imageUrl)
+        const product = new Product(title, price, description, imageUrl);
          
         product.save()
-        .then(res => {
-          console.log(res);
+        .then(result => {
+          console.log(result);
           res.redirect('/admin/products');
         })
         .catch(err=> console.log(err))
@@ -82,21 +82,17 @@ const getAdminPage = {
         console.log(err);
       })
   },
-  // postDeleteProduct(req, res){
-  //   const prdctID = req.body.productId;
-  //   Product.destroy({
-  //     where: {
-  //       id: prdctID
-  //     }
-  //   })
-  //   .then(result=>{
-  //     console.log("Succesffully Deleted Product");
-  //     res.redirect('/admin/products');  
-  //   })
-  //   .catch(err=>{
-  //     console.log(err);
-  //   })
-  // }
+  postDeleteProduct(req, res){
+    const prdctID = req.body.productId;
+    Product.deleteById(prdctID)
+    .then(result=>{
+      console.log("Succesffully Deleted Product");
+      res.redirect('/admin/products');  
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }
  }
 
 export default getAdminPage
