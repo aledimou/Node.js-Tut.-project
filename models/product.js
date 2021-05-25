@@ -2,12 +2,13 @@ import mongodb from "mongodb";
 import * as accessDb from '../util/database.js';
     
 class Product{   
-    constructor(title, price, description, imageUrl, _id){
+    constructor(title, price, description, imageUrl, _id, userId){
         this.title = title;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
         this._id = _id;
+        this.userId = userId
     }
 
     async save(){

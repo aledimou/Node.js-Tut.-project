@@ -4,6 +4,7 @@ import  router from "./routes/admin.js";
 import shopRoutes  from "./routes/shop.js";
 import ErrorPageController from "./controllers/404_Page.js";
 import * as accessDb from "./util/database.js"
+import User from "./models/user.js"
 
 
 const app = express();
@@ -18,16 +19,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //incoming user
 app.use((req, res, next)=>{
-    // User.findByPk(1)
-    // .then(user=>{
-    //     req.user = user;
-    //     next();
-    // })
-    // .catch(err=>console.log(err));
-    next();
+    User.findById('60a8006db2d80dcb26b0cce4')
+    .then(user=>{
+        
+        if (!user.cart) {
+            console.log("No cart.");
+            user.cart = { items: [] };
+          }
+        req.user = new User(user.name, user.email, user.cart, user._id);
+        next();
+    })
+    .catch(err=>console.log(err));
 });
-
-
 
 
 app.use('/admin', router);

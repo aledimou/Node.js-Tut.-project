@@ -9,7 +9,7 @@ const client = new MongoClient("mongodb+srv://alexis:RWDHuOJXLtyHSXEt@cluster01.
 export const connectDB = async () =>{
     try {
         await client.connect();
-        console.log("Connected correctly to server");
+        console.log("Connected correctly to Cluster");
         _db = client.db();
     } catch (err) {
         console.log(err.stack);
