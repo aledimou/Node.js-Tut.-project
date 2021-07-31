@@ -5,9 +5,8 @@ const MongoClient = mongodb.MongoClient;
 
 let _db;
 
-const key_uri = process.env.CONNECTION_URI
 
-const client = new MongoClient("mongodb+srv://alexis:"+key_uri+"@cluster01.nk0bi.mongodb.net/Cluster01?retryWrites=true&w=majority", { useUnifiedTopology: true });
+const client = new MongoClient("mongodb+srv://alexis:RWDHuOJXLtyHSXEt@cluster01.nk0bi.mongodb.net/Cluster01?retryWrites=true&w=majority", { useUnifiedTopology: true });
 
 export const connectDB = async () =>{
     try {
