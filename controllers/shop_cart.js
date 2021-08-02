@@ -1,5 +1,5 @@
-import Product from "../models/product.js"
-import User from "../models/user.js"
+import * as Product from "../models/product.js"
+// import User from "../models/user.js"
 
 
 const getTransaction ={  

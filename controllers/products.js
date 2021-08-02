@@ -3,8 +3,8 @@ import  Product from "../models/product.js";
 
 const HomeproductController = {
     getHomeProduct(req, res, next) {
-
-      Product.fetchAll()
+      //give all products
+      Product.find()
       .then(products=>{
         res.render('shop/product-page',
          {prodsList: products,
@@ -19,7 +19,7 @@ const HomeproductController = {
 
     getDetailsProduct(req, res, next) {
       const prodctId = req.params.productID
-      Product.findProduct(prodctId)
+      Product.findById(prodctId)
       .then(product =>{
         res.render('shop/product-detail',
         {product: product,
@@ -33,7 +33,7 @@ const HomeproductController = {
  },
 
     getIndex(req, res){
-      Product.fetchAll()
+      Product.find()
       .then(products =>{
         res.render('shop/index',
        {prodsList: products,

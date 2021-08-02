@@ -4,7 +4,7 @@ import  Product from "../models/product.js";
 
 const getAdminPage = {
     getAdminProducts(req, res, next) {
-      Product.fetchAll()
+      Product.find()
       .then(products =>{
         res.render('admin/products',
         {prodsList: products,
@@ -29,9 +29,8 @@ const getAdminPage = {
       if (!isEdit) {
         return res.redirect('/')
       }
-
      const prodID = req.params.productId;
-     Product.findProduct(prodID)
+     Product.findById(prodID)
       .then(product=>{
         if (!product) {
           return res.redirect('/')
@@ -54,8 +53,15 @@ const getAdminPage = {
         const price = req.body.price;
         const description = req.body.description;
         
-        const product = new Product(title, price, description, imageUrl, null, req.user._id);
-         
+        const product = new Product(
+          {
+            title: title,
+            price: price,
+            description: description,
+            imageUrl: imageUrl
+          }
+        );
+         //save() method from mongoose
         product.save()
         .then(result => {
           console.log(result);
@@ -71,20 +77,28 @@ const getAdminPage = {
       const updatedPrice = req.body.price;
       const updatedDescription = req.body.description;
       
-      const updatedPorduct = new Product(updatedTitle, updatedPrice, updatedDescription, updatedImage, new mongodb.ObjectId(prodId))
+      Product.findById(prodId)
+      //returns a mongoose object ,further we can apply mongoose methods to it
+      .then(product =>{
+        product.title = updatedTitle;
+        product.price = updatedPrice;
+        product.description = updatedDescription;
+        product.imageUrl = updatedImage;
 
-      updatedPorduct.save()
-      .then(result =>{
-        console.log("SuccesfuLly Updated");
-        res.redirect('/admin/products');   
+        product.save()
+        .then(product =>{
+          console.log(`Succesfully Updated ${product.title}`);
+          res.redirect('/admin/products');   
+        })
       })
-      .catch(err=>{
-        console.log(err);
-      })
+      .catch(err => console.log(err));
+
+     
+
   },
   postDeleteProduct(req, res){
     const prdctID = req.body.productId;
-    Product.deleteById(prdctID)
+    Product.deleteOne({_id: prdctID})
     .then(result=>{
       console.log("Succesffully Deleted Product");
       res.redirect('/admin/products');  
