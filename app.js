@@ -1,11 +1,14 @@
 import express from 'express'
 import path from 'path';
-import  router from "./routes/admin.js";
+import router from "./routes/admin.js";
 import shopRoutes  from "./routes/shop.js";
 import ErrorPageController from "./controllers/404_Page.js";
 // import * as accessDb from "./util/database.js"
 import User from "./models/user.js"
 import mongoose from "mongoose"
+import dotenv from "dotenv"
+
+dotenv.config();
 
 
 const app = express();
@@ -20,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //incoming user handle after initilization
 app.use((req, res, next)=>{
-    User.findById("610983402d49813acca40a78")
+    User.findById(`${process.env.USER_ID}`)
     .then(user=>{
         req.user = user;
         next();
@@ -36,7 +39,7 @@ app.use(ErrorPageController);
 
 
 
-mongoose.connect('mongodb+srv://alexis:RWDHuOJXLtyHSXEt@cluster01.nk0bi.mongodb.net/Cluster01?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://alexis:${process.env.CONNECTION_URI}@cluster01.nk0bi.mongodb.net/Cluster01?retryWrites=true&w=majority`,  {useNewUrlParser: true, useUnifiedTopology: true})
 .then((result)=>{
 
 
