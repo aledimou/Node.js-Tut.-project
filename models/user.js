@@ -1,6 +1,35 @@
-import mongodb from "mongodb"
-// import * as accessDb from "../util/database.js";
+import mongoose from "mongoose"
 
+const { Schema } = mongoose;
+
+const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    cart: {
+        items: [
+            {
+                productId:{
+                //this will store a reference to a product
+                type: Schema.Types.ObjectId,
+                ref: "Product",
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+          }
+        ]
+    }
+})
+
+export default mongoose.model("User", userSchema)
 
 // class User{
 //     constructor(username, email, cart, _id){

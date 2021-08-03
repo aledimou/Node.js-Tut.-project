@@ -5,7 +5,12 @@ import  Product from "../models/product.js";
 const getAdminPage = {
     getAdminProducts(req, res, next) {
       Product.find()
+      // //get certain properties we want to retrieve from find()
+      // .select("title price description - _id")//exclude _id field from the select
+      //use populate to get full access to the related user
+      // .populate("userId", "name") //explicity include name
       .then(products =>{
+        // console.log(products);
         res.render('admin/products',
         {prodsList: products,
          docTitle: 'Admin Products',
@@ -58,7 +63,8 @@ const getAdminPage = {
             title: title,
             price: price,
             description: description,
-            imageUrl: imageUrl
+            imageUrl: imageUrl,
+            userId: req.user
           }
         );
          //save() method from mongoose
