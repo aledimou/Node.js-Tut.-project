@@ -56,36 +56,22 @@ userSchema.methods.addToCard = function (product) {
 };
 
 userSchema.methods.deleteCartItem = function (productId) {
+  const updatedCartItems = this.cart.items.filter((item) => {
+    if (item.quantity === 1) {
+      return item._id.toString() !== productId.toString();
+    } else {
+      return (item.quantity -= item.quantity - 1);
+    }
+  });
+  this.cart.items = updatedCartItems;
 
-    const updatedCartItems = this.cart.items.filter((item) => {
-      if (item.quantity === 1) {
-        return item._id.toString() !== productId.toString();
-        
-      }else{
-        return  item.quantity -= item.quantity -1;
-      }
-    });
-    this.cart.items = updatedCartItems;
-    //   if (this.cart.item.quantity > 1) {
-    //       const updatedQuantityItem = this.cart.items.filter((itemm) =>{
-    //         return [...itemm, itemm.quantity: itemm.quantity -1]
-    //       })
-          
-    //   }
-
-    //   if (item.quantity === 1) {
-    //     const updatedCartItems = this.cart.items.filter((item) => {
-
-    //     return item._id.toString() !== productId.toString() ;
-    //     });
-
-    //     this.cart.items = updatedCartItems;
-    //   }
-  console.log(updatedCartItems);
-  
-  
   return this.save();
 };
+
+userSchema.methods.clearCart = function () {
+  this.cart = {items: []};
+  return this.save();
+}
 
 export default mongoose.model("User", userSchema)
 

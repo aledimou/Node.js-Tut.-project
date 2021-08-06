@@ -1,8 +1,10 @@
 import Product from "../models/product.js"
-import User from "../models/user.js"
+import user from "../models/user.js"
+import Order from "../models/order.js"
 
 
-const getTransaction = {
+
+const CartController = {
   getCart(req, res) {
     req.user
       .populate("cart.items.productId")
@@ -26,32 +28,33 @@ const getTransaction = {
         return req.user.addToCard(product);
       })
       .then((cart_result) => {
-          console.log("Product Added Succesfully to Cart");
+        console.log("Product Added Succesfully to Cart");
         res.redirect("/cart");
       })
       .catch((err) => console.log(err));
   },
   postCartdDeleteItem(req, res) {
     const prodId = req.body.productId;
-    req.user.deleteCartItem(prodId)
+    req.user
+      .deleteCartItem(prodId)
       .then((result) => {
-          console.log("Deleted Suyccesfully");
+        console.log("Deleted Suyccesfully");
         res.redirect("/");
       })
       .catch((err) => {
         console.log(err);
       });
   },
-  getCheckout(req, res) {
-    res.render("shop/checkout", {
-      docTtile: "Checkout",
-      path: "/checkout",
-    });
-  },
+  // getCheckout(req, res) {
+  //   res.render("shop/checkout", {
+  //     docTtile: "Checkout",
+  //     path: "/checkout",
+  //   });
+  // },
   getOrders(req, res) {
-    req.user
-      .getOrders()
+    Order.find({ "user.userId": req.user._id })
       .then((orders) => {
+        console.log(orders);
         res.render("shop/orders", {
           docTitle: "Orders",
           path: "/orders",
@@ -63,17 +66,35 @@ const getTransaction = {
       });
   },
   postOrder(req, res) {
-    let fetchedCart;
     req.user
-      .addOrder()
-      .then((result) => {
-        console.log(result);
-        res.redirect("/");
+      .populate("cart.items.productId")
+      .execPopulate()
+      .then((user) => {
+        // console.log(user);
+        const products = user.cart.items.map((item) => {
+          return {
+            quantity: item.quantity,
+            product: { ...item.productId._doc },
+          };
+        });
+        const order = new Order({
+          user: {
+            name: req.user.name,
+            userId: req.user._id,
+          },
+          products: products,
+        });
+        return order.save();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((result) => {
+        // console.log(result);
+        return req.user.clearCart();
+      })
+      .then(() => {
+        res.redirect("/orders");
+      })
+      .catch((err) => console.log(err));
   },
 };
 
-export default getTransaction
+export default CartController

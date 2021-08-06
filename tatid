@@ -1,0 +1,53 @@
+[33mcommit 2f849eca5b1c476279f2c79ffb158a68630b4467[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: aledimou <you@example.com>
+Date:   Thu Aug 5 18:32:43 2021 +0300
+
+    Display Cart
+
+[33mcommit 1a63565c749ceb565fac6c25e50b2f93bc6c1b0c[m
+Author: aledimou <you@example.com>
+Date:   Wed Aug 4 00:44:02 2021 +0300
+
+    New user id
+
+[33mcommit bd3a4f637c712991749467dfb9d73a44492a6fb5[m
+Author: aledimou <you@example.com>
+Date:   Wed Aug 4 00:33:00 2021 +0300
+
+    Add Relations Between User and Products
+
+[33mcommit af403805ed2f805f3b664ec73133775a8fc34528[m
+Author: aledimou <you@example.com>
+Date:   Mon Aug 2 22:44:55 2021 +0300
+
+    Add Mongoose CRUD Methods
+
+[33mcommit 6b6fb8521d0086d5ef130326009e1eaec4ecbc75[m
+Author: aledimou <you@example.com>
+Date:   Sat Jul 31 19:18:44 2021 +0300
+
+    update database.js
+
+[33mcommit 78703fa00b7211a451ec08eb3047fd65104558b0[m
+Author: Your Name <you@example.com>
+Date:   Tue May 25 20:59:32 2021 +0300
+
+    add .env file
+
+[33mcommit 10a2d21b2c76a6f42b70f80e246148eeeb6c4f29[m
+Author: Your Name <you@example.com>
+Date:   Tue May 25 20:25:58 2021 +0300
+
+    Finishing Relations
+
+[33mcommit fcfbc43081a1b29c012bbc95b1836cfc82fdd909[m
+Author: Your Name <you@example.com>
+Date:   Thu May 20 19:13:05 2021 +0300
+
+    Delete Functionality
+
+[33mcommit 6f50d0f2fcc3a20beeba0e9636314e2012df6206[m
+Author: Your Name <you@example.com>
+Date:   Thu May 20 18:09:20 2021 +0300
+
+    Initial Commit
