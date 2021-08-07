@@ -14,6 +14,7 @@ const CartController = {
           docTitle: "Cart",
           path: "/cart",
           products: user.cart.items,
+          isAuthenticated: req.isLoggedIn
         });
       })
       .catch((err) => {
@@ -54,11 +55,12 @@ const CartController = {
   getOrders(req, res) {
     Order.find({ "user.userId": req.user._id })
       .then((orders) => {
-        console.log(orders);
+        // console.log(orders);
         res.render("shop/orders", {
           docTitle: "Orders",
           path: "/orders",
           orders: orders,
+          isAuthenticated: req.isLoggedIn
         });
       })
       .catch((err) => {

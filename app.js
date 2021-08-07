@@ -7,6 +7,8 @@ import ErrorPageController from "./controllers/404_Page.js";
 import User from "./models/user.js"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
+import authRoutes from "./routes/auth.js"
+
 
 
 dotenv.config();
@@ -33,8 +35,11 @@ app.use((req, res, next)=>{
     .catch(err=>console.log(err));
 });
 
+
 app.use('/admin', router);
 app.use(shopRoutes);
+app.use(authRoutes);
+
 
 
 app.use(ErrorPageController);

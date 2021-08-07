@@ -3,6 +3,7 @@ import  Product from "../models/product.js";
 
 const HomeproductController = {
     getHomeProduct(req, res, next) {
+      console.log(req.isLoggedIn);
       //give all products
       Product.find()
       .then(products=>{
@@ -10,6 +11,7 @@ const HomeproductController = {
          {prodsList: products,
           docTitle: 'All Products',
           path: '/products',
+          isAuthenticated: req.isLoggedIn      
         });  
       })
       .catch(err=>{
@@ -25,6 +27,7 @@ const HomeproductController = {
         {product: product,
         docTitle: 'Details',
         path: '/products',
+        isAuthenticated: req.isLoggedIn
         });
       })
       .catch(err=>{
@@ -38,7 +41,8 @@ const HomeproductController = {
         res.render('shop/index',
        {prodsList: products,
         docTitle: 'My Shop',
-        path: '/',        
+        path: '/',
+        isAuthenticated: req.isLoggedIn        
     });
       }).catch(err=>{
         console.log(err);

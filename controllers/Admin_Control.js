@@ -15,6 +15,7 @@ const getAdminPage = {
         {prodsList: products,
          docTitle: 'Admin Products',
          path: '/admin/products',
+         isAuthenticated: req.isLoggedIn
         });
       })
       .catch(err=>{
@@ -25,7 +26,8 @@ const getAdminPage = {
         res.render('admin/edit-product',{
           docTitle: 'Admin Page',
           path: '/admin/add-product',
-          editing: false
+          editing: false,
+          isAuthenticated: req.isLoggedIn
         });
     },
     getEditProduct(req, res){
@@ -44,7 +46,8 @@ const getAdminPage = {
           docTitle: 'Edit Products',
           path: '/admin/edit-product',
           editing: isEdit, 
-          product: product   
+          product: product,
+          isAuthenticated: req.iusLoggedIn   
         });   
       })
       .catch(err=>{
